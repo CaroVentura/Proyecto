@@ -29,86 +29,54 @@
       <p>Chidos</p>
     </div>
   </header>
-  <h1 class="bg-dark text-center text-light mb-3">Lista de alumnos</h1>
-    
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <a href="./pages/alumnos.php" class="btn btn-dark mb-3">Nuevo Alumno</a>
-                <table border="3" class="table">
-            <caption>Tabla de alumnos</caption>
+  <h1 id="titulo">Música</h1>
+  <div class="container" id="tb">
+    <div class="row ">
+      <div class="col">
+        <table class="tabla">
+          <thead class= "tabla-encabezado">
             <tr>
-                <th>#</th>
-                <th>Nombre</th>
-                <th>AP</th>
-                <th>AM</th>
-                <th>Imágen</th>
+              <th scope="col">IMAGEN</th>
+              <th scope="col">ALBUM</th>
             </tr>
+          </thead>
+          <tbody>
+          <?php
+            $contador = 0;
+            $html ='';
+            foreach($alumnos as $alumno){
+              $html.='
+              <tr>
+              <th scope="row">'.++$contador.'</th>
+              <td>'.$alumno["nombre_alumno"].''.
+                  $alumno["ap_paterno_alumno"].''. $alumno["ap_materno_alumno"].
+                  '</td>
+                  <td>
+                  <a href="./pages/detalles_alumno.php?id_alumno='.$alumno["id_alumno"].'"
+                  class="btn btn-primary">Detalles</a>
+                  <a href="./backend/alumnos/delete.php?id_alumno='.$alumno["id_alumno"].'"
+                  class="btn btn-danger">Eliminar</a>
+                  </td>
+                  </tr>
+                ';
+              }
+              echo $html;
+            ?>
             <tr>
-                <td>1</td>
-                <td colspan="3">Gerardo Juárez Hernández</td>
-                <td><img src="niño1.jpg" alt="ImagenA"></td>
+              <td scope="row"><img src="./img/musica.jpg" alt="" width="60%"></td>
+              <td>
+                <p>Es una canción interpretada por el cantante y rapero argentino Paulo Londra, en 
+                    colaboración con el cantante puertorriqueño Lenny Tavárez.</p><br>
+                <div><a href=""id="btn-1">Spotify</a>
+                <a href="" id="btn-2"> Apple Music</a>
+                </div>
+              </td>
             </tr>
-            <tr>
-                <td>2</td>
-                <td colspan="3">Pedro Fernández Martínez</td>
-                <td><img src="niño2.jpg" alt="ImagenA"></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td colspan="3">Juan Pérez Cortez/td>
-                <td><img src="niño3.jpg" alt="ImagenA"></td>
-            </tr>
+          </tbody>
         </table>
-                <table class="table ">
-                    <thead class="thead-dark">
-                        <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Alumno</th>
-                        <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Jorge Eduardo Xalteno Altamirano</td>
-                            <td>
-                                <a href="./pages/detalles_alumno.php" class="btn btn-primary">Detalles</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Augusto Melendez Teodoro</td>
-                            <td>
-                                <a href="./pages/detalles_alumno.php" class="btn btn-primary">Detalles</a>
-                            </td>
-                        </tr>
-                    </tbody>
-         <!--            <?php
-                        $contador = 0;
-                        $html ='';
-                        foreach($alumnos as $alumno){
-                            $html.='
-                            <tr>
-                            <th scope="row">'.++$contador.'</th>
-                            <td>'.$alumno["nombre_alumno"].''.
-                                $alumno["ap_paterno_alumno"].''. $alumno["ap_materno_alumno"].
-                                '</td>
-                                <td>
-                                <a href="./pages/detalles_alumno.php?id_alumno='.$alumno["id_alumno"].'"
-                                class="btn btn-primary">Detalles</a>
-                                <a href="./backend/alumnos/delete.php?id_alumno='.$alumno["id_alumno"].'"
-                                class="btn btn-danger">Eliminar</a>
-                                </td>
-                                </tr>
-                            ';
-                        }
-                        echo $html;
-                    ?> -->
-                </table>
-            </div>
-        </div>
-
+      </div>
     </div>
+
+  </div>
 </body>
 </html>
