@@ -32,7 +32,7 @@ include '../backend/conexion.php';
             </nav>
         </div>
         <div class="header-content container">
-            <h1>Rolone</h1>
+            <h1>Rolones</h1>
             <p>Chidos</p>
         </div>
     </header>
@@ -42,9 +42,13 @@ include '../backend/conexion.php';
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
+                    
+                    <br>
+                    <h4>Registra un artista</h4>
                     <br>
                     <form id="form-artista" action="../backend/insert_artista.php" method="post" enctype="multipart/form-data">
                             <div class="form-row">
+                            <br>
                                 <div class="form-group col-md-6">
                                 <label for="inputAddress">Nombre</label>
                                 <input type="text" class="form-control" id="nombre" name= "nombre" placeholder="Nombre(s)">
@@ -83,6 +87,7 @@ include '../backend/conexion.php';
                             <div class="form-group col-md-4"></div>
                             </div>
                             </form>
+                            <br><br>
                 </div>
 
             </div>

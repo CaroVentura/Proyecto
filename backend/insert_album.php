@@ -3,20 +3,19 @@
     include 'conexion.php';
 
     //Para almacenar la información del form registrar
-    $nombre = $_POST['nombre'];
-    $ap_paterno = $_POST['apellido_paterno'];
-    $ap_materno = $_POST['apellido_materno'];
+    $nombre_album = $_POST['nombre_album'];
+    $nom_cancion = $_POST['nom_cancion'];
     $imagen = $_POST['imagen'];
-    $descripcion = $_POST['descripcion'];
+    $artista = $_POST['artista'];
 
     //Validar si las variables no estan vacias
-    if( empty($nombre) || empty($ap_paterno) || empty($ap_materno) || empty($descripcion)
+    if( empty($nombre_album) || empty($nom_cancion) || empty($artista)
         ){
         //Se cierra la conexión
 		mysqli_close($conexion);
         //Se redirecciona al formulario de insertar
 		echo '<script>alert("Error, hay información faltante.");</script>';
-		echo '<script> window.location="../pages/artista.php"; </script>';
+		echo '<script> window.location="../pages/album.php"; </script>';
     }//
 
     //se declara una variable para referenciar al input que contiene la imagen
@@ -26,14 +25,14 @@
     $nombre_archivo = 'NULL';
 
     //Se genera el sql para insertar
-    $query_text = "INSERT INTO artistas values(NULL,'$nombre', '$ap_paterno', '$ap_materno', NULL,'$descripcion');";
+    $query_text = "INSERT INTO album values(NULL,'$nom_cancion', '$nombre_album', NULL,'$artista');";
     // echo $query_text;
 
     //Se conecta el sql con la bd
     $query_res = mysqli_query($conexion, $query_text);
         //Se cierra la conexión
         mysqli_close($conexion);
-        echo '<script>alert("Artista registrado correctamente.");</script>';
+        echo '<script>alert("Album registrado correctamente.");</script>';
         echo '<script> window.location="../index.php"; </script>';
     //end else se guardaron los datos de los tennis correctamente
 
