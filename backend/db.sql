@@ -1,3 +1,9 @@
+DROP DATABASE IF EXISTS musica;
+CREATE DATABASE IF NOT EXISTS musica DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE musica;
+
+GRANT ALL PRIVILEGES ON musica.* TO 'usuariomusica'@'localhost' IDENTIFIED BY 'usuariomusica8';
+
 create table Artistas
 (IdArt int(11) primary key auto_increment,
  NombreArt varchar (25) not null, ApArt varchar (25) not null, 

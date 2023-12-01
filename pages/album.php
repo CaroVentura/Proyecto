@@ -1,3 +1,9 @@
+<?php
+
+include '../backend/conexion.php';
+
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

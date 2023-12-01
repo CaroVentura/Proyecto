@@ -1,3 +1,6 @@
+<?php
+    include './backend/conexion.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -17,10 +20,10 @@
       </label>
       <nav class="navbar">
         <ul>
-          <li><a href="">Inicio</a></li>
-          <li><a href="">Artistas</a></li>
-          <li><a href="#">Album</a></li>
-          <li><a href="">Buscar</a></li>
+          <li><a href="./index.php">Inicio</a></li>
+          <li><a href="./pages/artista.php">Artistas</a></li>
+          <li><a href="./pages/album.php">Album</a></li>
+          <li><a href="./pages/buscar.php">Buscar</a></li>
         </ul>
       </nav>
     </div>
@@ -42,25 +45,25 @@
           </thead>
           <tbody>
           <?php
-            $contador = 0;
-            $html ='';
-            foreach($alumnos as $alumno){
-              $html.='
-              <tr>
-              <th scope="row">'.++$contador.'</th>
-              <td>'.$alumno["nombre_alumno"].''.
-                  $alumno["ap_paterno_alumno"].''. $alumno["ap_materno_alumno"].
-                  '</td>
-                  <td>
-                  <a href="./pages/detalles_alumno.php?id_alumno='.$alumno["id_alumno"].'"
-                  class="btn btn-primary">Detalles</a>
-                  <a href="./backend/alumnos/delete.php?id_alumno='.$alumno["id_alumno"].'"
-                  class="btn btn-danger">Eliminar</a>
-                  </td>
-                  </tr>
-                ';
-              }
-              echo $html;
+            // $contador = 0;
+            // $html ='';
+            // foreach($alumnos as $alumno){
+            //   $html.='
+            //   <tr>
+            //   <th scope="row">'.++$contador.'</th>
+            //   <td>'.$alumno["nombre_alumno"].''.
+            //       $alumno["ap_paterno_alumno"].''. $alumno["ap_materno_alumno"].
+            //       '</td>
+            //       <td>
+            //       <a href="./pages/detalles_alumno.php?id_alumno='.$alumno["id_alumno"].'"
+            //       class="btn btn-primary">Detalles</a>
+            //       <a href="./backend/alumnos/delete.php?id_alumno='.$alumno["id_alumno"].'"
+            //       class="btn btn-danger">Eliminar</a>
+            //       </td>
+            //       </tr>
+            //     ';
+            //   }
+            //   echo $html;
             ?>
             <tr>
               <td scope="row"><img src="./img/musica.jpg" alt="" width="60%"></td>
