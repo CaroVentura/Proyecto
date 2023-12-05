@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    text-transform: capitalize;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color:rgba(31, 21, 11, 0.996);
+}
+.container {
+    max-width: 1200px;
+}
+
+.header{
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0 12%;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    transition: .2s;
+}
+
+#titulo{
+    padding: 20px;
+    font-size: 3rem;
+    text-align: center;
+    font-weight: 400;
+    color: white;
+}
+
+.menu .navbar ul{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    list-style: none;
+}
+.menu .navbar ul li{
+    position: relative;
+    margin: 0 5rem;
+}
+
+.menu .navbar ul li a {
+    font-size: 18px;
+    padding: 20px;
+    color: #ffffff;
+    display: block;
+    font-weight: 600;
+    transition: all .2s ease;
+}
+
+.menu .navbar ul li a:hover {
+    color: rgb(97, 67, 39);
+}
+
+.menu .navbar ul li ul {
+    position: absolute;
+    right: 0;
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.20);
+    display: none;
+  }
+  
+  .menu .navbar ul li ul li a {
+    font-size: 15px;
+    text-transform: capitalize;
+  }
+  
+  .menu .navbar ul li ul li ul {
+    position: absolute;
+    top: 0;
+    right: 300px;
+  }
+  
+  .menu .navbar ul li ul li {
+    width: 100%;
+  }
+  #menu,.header label {
+    display: none;
+    cursor: pointer;
+  }
+  
+  #menu {
+    display: none;
+  }
+  
+  .menu-icono {
+    width: 25px;
+  }
+  
+  .menu label {
+    cursor: pointer;
+    display: none;
+  }
+  
+@media(max-width:991px) {
+  .menu {
+    padding: 30px;
+  }
+
+  .menu label {
+    display: initial;
+  }
+
+  .menu .navbar {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #323337;
+    display: none;
+  }
+
+  .menu .navbar ul li {
+    width: 100%;
+  }
+
+  #menu:checked~.navbar {
+    display: initial;
+  }
+}

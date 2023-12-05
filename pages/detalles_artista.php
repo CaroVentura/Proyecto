@@ -67,13 +67,9 @@ include ('../backend/admin/conexion.php');
                                 <textarea class="form-control" placeholder="Ingresa la bibliografía del artista aquí..." id="descripcion" name="descripcion"></textarea>
                             </div>
                             <div class="form-row">
-                            <div class="form-group col-md-1"></div>
+                            <div class="form-group col-md-4"></div>
                             <div class="form-group col-md-1">
                             <button type="submit" class="btn btn-primary">Registrar</button>
-                            </div>
-                            <div class="form-group col-md-1"></div>
-                            <div class="form-group col-md-1">
-                            <button type="reset" class="btn btn-dark">Limpiar</button>
                             </div>
                             <div class="form-group col-md-1"></div>
                             <div class="form-group col-md-1">

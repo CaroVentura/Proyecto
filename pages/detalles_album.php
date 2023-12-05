@@ -1,19 +1,33 @@
 <?php
-    //Iniciación de la conexión
-    include("../backend/admin/conexion.php");
-
-    $select_artista = "SELECT IdArt, apodo_art FROM artistas;";
-
-    $query_artista = mysqli_query($conexion,$select_artista);
-
-    $artistas = array();
-
-    if(mysqli_num_rows($query_artista) != 0){
-        while($datos = mysqli_fetch_array($query_artista, MYSQLI_ASSOC)){
-            $artistas[] = $datos;
-        }
-        // print("<pre>".print_r($artistas)."</pre>");
+require('../backend/admin/conexion.php'); 
+if(isset($_GET["IdAlbum"])){
+    $album = array();
+    $id_album = $_GET["IdAlbum"];
+    /**
+        SELECT id_alumno, nombre FROM alumnos WHERE id_alumno = 2;
+    */
+    $select = "SELECT * FROM album WHERE IdAlbum = '$id_album';";
+    // echo $select;
+    //Ejecutamos nuestro query
+    $query = mysqli_query($conexion, $select);//TRUE
+    $album = mysqli_fetch_array($query, MYSQLI_ASSOC);
+    if (is_null($album)) {
+        mysqli_close($conexion);
+        echo '  <script> 
+                    alert("Album no encontrado...");
+                    window.location = "../index.php";
+                </script>';
     }
+    mysqli_close($conexion);
+}//end if isset
+else{
+    mysqli_close($conexion);
+    echo '  <script> 
+                alert("Información no generada de manera correcta...");
+                window.location = "../index.php";
+            </script>';
+}//end else
+echo print("<pre>".print_r($album)."</pre>");
 ?>
 <!DOCTYPE html>
 <html>
@@ -46,28 +60,29 @@
     <div>
         <br>
         <center>
-        <h1 class="text-white">Registrar nuevo álbum</h1>
+        <h1 class="text-white">Álbum</h1>
         </center>
         <center>
         <figure> 
-            <img src="https://static.vecteezy.com/system/resources/previews/021/693/747/non_2x/music-album-icon-vector.jpg" width="200x200">
+            <img src="<?php echo ($album["ImAlbum"] == '') ? '../img/album/' : '../img/album/'.$album["ImAlbum"];?>" width="200x200">
         </figure>
         </center>
+        <input type="hidden" value="<?php echo $album["IdAlbum"]; ?>" name="IdAlbum">
     </div>
     <section  style="background-color: gray;">
         <div class="container">
-        <form action="../backend/album/insert_album.php" method="POST" enctype="multipart/form-data" >
+        <form action="../backend/album/update.php" method="POST" enctype="multipart/form-data" >
             
           <div class="row">
             <div class="form-group col-md-4">
               <label for="inputEmail4">Nombre Albúm</label>
-              <input type="text" class="form-control" id="inputEmail4" placeholder="Nombre albúm" name="album">
+              <input type="text" class="form-control" id="inputEmail4" placeholder="Nombre albúm" name="album" value="<?php echo $album["NomAlbum"];?>">
             </div>
 
             <!-- Título -->
             <div class="form-group col-md-4">
               <label for="inputEmail4">Título Música</label>
-              <input type="text" class="form-control" id="inputEmail4" placeholder="Título música" name="cancion">
+              <input type="text" class="form-control" id="inputEmail4" placeholder="Título música" name="cancion" value="<?php echo $album["NomCan"];?>">
             </div>
 
             <!-- Imágen -->
@@ -90,18 +105,25 @@
                     }
                     echo $html;  
                 ?>
+                <?php
+                    foreach($artistas as $artista){
+                        $apodo_artista = $artista["apodo_art"];
+                        $selected = ($album['IdArt'] == $artista['IdArt']) ? 'selected' : '';
+                        echo "<option value='{$artista["IdArt"]}' $selected>$apodo_artista</option>"; 
+                    } 
+                ?>
               </select>
             </div>
             <!-- Spotify -->
             <div class="form-group col-md-4">
               <label for="inputEmail4">Link Spotify</label>
-              <input type="text" class="form-control" id="inputEmail4" placeholder="Link Spotify" name="linkS">
+              <input type="text" class="form-control" id="inputEmail4" placeholder="Link Spotify" name="linkS" value="<?php echo $album["Spotify"];?>">
             </div>
 
             <!-- Apple -->
             <div class="form-group col-md-4">
               <label for="inputEmail4">Apple Music</label>
-              <input type="text" class="form-control" id="inputEmail4" placeholder="Link Apple Music" name="linkA">
+              <input type="text" class="form-control" id="inputEmail4" placeholder="Link Apple Music" name="linkA" value="<?php echo $album["AppleMusic"];?>">
             </div>
 
           </div>
@@ -110,21 +132,19 @@
               <!-- Descripcion -->
               <div class="form-group col-md-12">
                 <label for="inputEmail4">Descripción del albúm</label>
-                <textarea class="form-control" placeholder="Ingresa la descripción del albúm aquí..." name="descripcion"></textarea>
+                <textarea class="form-control" placeholder="Ingresa la descripción del albúm aquí..." name="descripcion" value="<?php echo $album["DescAlbum"];?>"></textarea>
               </div>
             </div>
+
             <div class="form-row">
                 
-                    <div class="form-group col-md-1 mr-3" >
-                      <button type="submit" class="btn btn-primary">Registrar</button>
-                    </div>
                     <div class="form-group col-md-1">
-                      <button type="reset" class="btn btn-dark">Limpiar</button>
+                      <button type="submit" class="btn btn-primary">Actualizar</button>
                     </div>
+               
                     <div class="form-group col-md-1">
                         <a href="../index.php" class="btn btn-danger">Cancelar</a>
                     </div>
-                    
                 <div class="form-group col-md-4"></div>
             </div>
           

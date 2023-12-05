@@ -1,3 +1,25 @@
+<?php
+  include('./backend/admin/conexion.php');
+  /*QUERY READ * SELECT
+    SELECT * FROM TABLE;
+    SELECT ATTRIBUTE_A, ATTRIBUTE_B FROM TABLE
+  */
+  $select = "SELECT album.*, artistas.apodo_art FROM album INNER JOIN artistas ON album.IdArt = artistas.IdArt";
+
+  $query = mysqli_query($conexion,$select);
+
+  //arreglo temporal de informacion
+  $albums = array();
+
+  if(mysqli_num_rows($query) != 0){
+    while($datos = mysqli_fetch_array($query, MYSQLI_ASSOC)){
+      $albums[] = $datos; 
+    }
+    // print("<pre>".print_r($albums,true)."</pre>");
+  }
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -17,10 +39,10 @@
       </label>
       <nav class="navbar">
         <ul>
-          <li><a href="">Inicio</a></li>
-          <li><a href="">Artistas</a></li>
-          <li><a href="#">Album</a></li>
-          <li><a href="">Buscar</a></li>
+          <li><a href="./index.php">Inicio</a></li>
+          <li><a href="./pages/artista.php">Artistas</a></li>
+          <li><a href="./pages/album.php">Album</a></li>
+          <li><a href="./pages/buscar.php">Buscar</a></li>
         </ul>
       </nav>
     </div>
@@ -41,42 +63,27 @@
             </tr>
           </thead>
           <tbody>
-          <?php
-            $contador = 0;
-            $html ='';
-            foreach($alumnos as $alumno){
-              $html.='
-              <tr>
-              <th scope="row">'.++$contador.'</th>
-              <td>'.$alumno["nombre_alumno"].''.
-                  $alumno["ap_paterno_alumno"].''. $alumno["ap_materno_alumno"].
-                  '</td>
-                  <td>
-                  <a href="./pages/detalles_alumno.php?id_alumno='.$alumno["id_alumno"].'"
-                  class="btn btn-primary">Detalles</a>
-                  <a href="./backend/alumnos/delete.php?id_alumno='.$alumno["id_alumno"].'"
-                  class="btn btn-danger">Eliminar</a>
-                  </td>
+            <?php
+              $html='';
+              foreach($albums as $album){
+                  $html.='
+                  <tr>
+                    <td><img src="./img/album/'.$album['ImAlbum'].'" width="25%"></td>
+                    <td>'.$album['NomCan'].' <br> '.$album['apodo_art'].'<br> '.$album['NomAlbum'].'
+                    <div><a href="'.$album['Spotify'].'"id="btn-1" target="_blank">Spotify</a>
+                    <a href="'.$album['AppleMusic'].'" id="btn-2" target="_blank">Apple Music</a>
+                    <a href="./pages/detalles_album.php?IdAlbum='.$album['IdAlbum'].'" id="btn-3">Detalles</a>
+                    <a href="./pages/'.$album['IdAlbum'].'" id="btn-4">Cantante</a>
+                    </div>
                   </tr>
-                ';
+                  ';
               }
               echo $html;
             ?>
-            <tr>
-              <td scope="row"><img src="./img/musica.jpg" alt="" width="60%"></td>
-              <td>
-                <p>Es una canción interpretada por el cantante y rapero argentino Paulo Londra, en 
-                    colaboración con el cantante puertorriqueño Lenny Tavárez.</p><br>
-                <div><a href=""id="btn-1">Spotify</a>
-                <a href="" id="btn-2"> Apple Music</a>
-                </div>
-              </td>
-            </tr>
           </tbody>
         </table>
       </div>
     </div>
-
   </div>
 </body>
 </html>

@@ -171,6 +171,7 @@ th{
 }
 
 td{
+  text-align: left;
   padding: 15px;
 }
 
@@ -184,7 +185,7 @@ p{
 .container .tabla td a{
   color: white;
   transition: all .2s ease;
-  padding: 0 20px 0 20px ;
+  padding: 0 15px 0 15px ;
 }
 
 .container .tabla td #btn-1:hover{
@@ -194,6 +195,20 @@ p{
 .container .tabla td #btn-2:hover{
   background-color: rgb(221, 73, 73);
   color: white;
+}
+
+.container .tabla td #btn-3:hover{
+  background-color: rgb(88, 0, 170);
+  color: white;
+}
+
+.container .tabla td #btn-4:hover{
+  background-color: rgb(0, 111, 126);
+  color: white;
+}
+
+.container .tabla td #imagex{
+  align-items: center;
 }
 
 @media(max-width:991px) {
@@ -228,9 +243,5 @@ p{
 
   .header-content {
     padding: 100px 30px;
-  }
-
-  .header-content p {
-    padding: 0;
   }
 }
