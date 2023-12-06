@@ -73,7 +73,8 @@
                     <div><a href="'.$album['Spotify'].'"id="btn-1" target="_blank">Spotify</a>
                     <a href="'.$album['AppleMusic'].'" id="btn-2" target="_blank">Apple Music</a>
                     <a href="./pages/detalles_album.php?IdAlbum='.$album['IdAlbum'].'" id="btn-3">Detalles</a>
-                    <a href="./pages/'.$album['IdAlbum'].'" id="btn-4">Cantante</a>
+                    <a href="./pages/detalles_artista.php?IdArt='.$album['IdArt'].'" id="btn-4">Cantante</a>
+                    <a href="./backend/album/delete.php?IdAlbum='.$album['IdAlbum'].'" id="btn-2">Eliminar</a>
                     </div>
                   </tr>
                   ';

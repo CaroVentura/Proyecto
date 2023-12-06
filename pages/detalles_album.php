@@ -1,5 +1,19 @@
 <?php
 require('../backend/admin/conexion.php'); 
+
+
+$select_artista = "SELECT IdArt, apodo_art FROM artistas;";
+
+$query_artista = mysqli_query($conexion,$select_artista);
+
+$artistas = array();
+
+if(mysqli_num_rows($query_artista) != 0){
+    while($datos = mysqli_fetch_array($query_artista, MYSQLI_ASSOC)){
+        $artistas[] = $datos;
+    }
+    // print("<pre>".print_r($artistas)."</pre>");
+}
 if(isset($_GET["IdAlbum"])){
     $album = array();
     $id_album = $_GET["IdAlbum"];
@@ -27,7 +41,7 @@ else{
                 window.location = "../index.php";
             </script>';
 }//end else
-echo print("<pre>".print_r($album)."</pre>");
+// echo print("<pre>".print_r($album)."</pre>");
 ?>
 <!DOCTYPE html>
 <html>
@@ -67,12 +81,12 @@ echo print("<pre>".print_r($album)."</pre>");
             <img src="<?php echo ($album["ImAlbum"] == '') ? '../img/album/' : '../img/album/'.$album["ImAlbum"];?>" width="200x200">
         </figure>
         </center>
-        <input type="hidden" value="<?php echo $album["IdAlbum"]; ?>" name="IdAlbum">
+        
     </div>
-    <section  style="background-color: gray;">
+    <section  style="background-color: gray;"> 
         <div class="container">
         <form action="../backend/album/update.php" method="POST" enctype="multipart/form-data" >
-            
+        <input type="hidden" value="<?php echo $album["IdAlbum"]; ?>" name="IdAlbum">
           <div class="row">
             <div class="form-group col-md-4">
               <label for="inputEmail4">Nombre Albúm</label>
@@ -96,22 +110,15 @@ echo print("<pre>".print_r($album)."</pre>");
             <!-- Ártitsta -->
             <div class="col-md-4 mb-4" >
               <label class="mr-sm-2" for="inlineFormCustomSelect">Artista</label>
-              <select id="form-select" class="custom-select mr-sm-2" name="nom_artista">
+              <select id="nom_artista" class="custom-select mr-sm-2" name="nom_artista">
                 <option value="" selected>Selecciona un artista</option>
                 <?php
-                    $html = '';
-                    foreach($artistas as $artista){
-                        $html.= '<option value="'.$artista["IdArt"].'">'.$artista["apodo_art"].'</option>';  
-                    }
-                    echo $html;  
-                ?>
-                <?php
-                    foreach($artistas as $artista){
-                        $apodo_artista = $artista["apodo_art"];
+                    foreach ($artistas as $artista) {
+                        $apodo_artista = $artista['apodo_art'];
                         $selected = ($album['IdArt'] == $artista['IdArt']) ? 'selected' : '';
-                        echo "<option value='{$artista["IdArt"]}' $selected>$apodo_artista</option>"; 
-                    } 
-                ?>
+                        echo "<option value='{$artista['IdArt']}' $selected>$apodo_artista</option>";
+                    }
+                    ?>
               </select>
             </div>
             <!-- Spotify -->
@@ -132,17 +139,17 @@ echo print("<pre>".print_r($album)."</pre>");
               <!-- Descripcion -->
               <div class="form-group col-md-12">
                 <label for="inputEmail4">Descripción del albúm</label>
-                <textarea class="form-control" placeholder="Ingresa la descripción del albúm aquí..." name="descripcion" value="<?php echo $album["DescAlbum"];?>"></textarea>
+                <textarea class="form-control" placeholder="Ingresa la descripción del albúm aquí..." name="descripcion"><?php echo $album["DescAlbum"];?></textarea>
               </div>
             </div>
 
             <div class="form-row">
                 
-                    <div class="form-group col-md-1">
+                    <div class="form-group col-md-1 mx-2" >
                       <button type="submit" class="btn btn-primary">Actualizar</button>
                     </div>
                
-                    <div class="form-group col-md-1">
+                    <div class="form-group col-md-1 mx-2">
                         <a href="../index.php" class="btn btn-danger">Cancelar</a>
                     </div>
                 <div class="form-group col-md-4"></div>

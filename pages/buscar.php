@@ -1,3 +1,31 @@
+<?php
+include('../backend/admin/conexion.php');
+
+$consulta = "SELECT album.*, artistas.apodo_art, artistas.NombreArt
+            FROM album
+            INNER JOIN artistas ON album.IdArt = artistas.IdArt";
+
+// Obtener el término de búsqueda de la variable GET
+$query = isset($_GET['query']) ? $_GET['query'] : null;
+
+if ($query) {
+    // Añadir condiciones de búsqueda a la consulta
+    $consulta .= " WHERE NomCan LIKE '%$query%'
+                OR apodo_art LIKE '%$query%'
+                OR NomAlbum LIKE '%$query%'";
+}
+
+$resultadoConsulta = mysqli_query($conexion, $consulta);
+
+$canciones = array();
+
+while ($cancion = mysqli_fetch_assoc($resultadoConsulta)) {
+    $canciones[] = $cancion;
+}
+
+$idAlbum = isset($_GET['IdAlbum']) ? $_GET['IdAlbum'] : null;
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,9 +65,53 @@
             </nav>
         </div>
     </header>
-    
-    <section>
+    <div class="container-fluid p-3">
+    <form class="form-inline my-2 my-lg-0 text-center" method="GET" action="./buscar.php">
+            <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" name="query">
+            <button class="btn bg-personal my-2 my-sm-0 text-white" type="submit">Buscar</button>
+    </form>
+    </div>
 
+    <section>
+    <div class="container-fluid p-3">
+    <?php if ($idAlbum) { ?>
+        <!-- Sección para el caso de visualización de un álbum específico -->
+    <?php } else { ?>
+        <h1 class="bg-dark text-center text-light mb-3">Resultados de búsqueda</h1>
+        <?php if (empty($canciones)) { ?>
+            <p class="text-center text-danger">No se encontraron resultados para la búsqueda.</p>
+        <?php } else { ?>
+            <div class="row">
+                <?php foreach ($canciones as $cancion) { ?>
+                    <div class="col-md-6">
+                        <div class="card bg-secondary mb-3">
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="../img/album/<?php echo $cancion['ImAlbum']; ?>" class="card-img"
+                                        alt="Imagen del álbum">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-light"><?php echo $cancion['NomCan']; ?></h3>
+                                        <h5 class="card-text text-light"><?php echo $cancion['apodo_art']; ?></h5>
+                                        <p class="card-text text-light"><?php echo $cancion['NomAlbum']; ?></p>
+                                        <a href="<?php echo $cancion['Spotify']; ?>" class="btn btn-success">Spotify</a>
+                                        <a href="<?php echo $cancion['AppleMusic']; ?>"
+                                        class="btn text-danger btn-light">Apple Music</a>
+                                        <a href="./detalles_album.php?id=<?php echo $cancion['IdAlbum']; ?>"
+                                        class="btn btn-dark">Detalles Álbum</a>
+                                        <a href="./detalles_artista.php?id=<?php echo $cancion['IdArt']; ?>"
+                                        class="btn btn-dark">Detalles Artista</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+        <?php } ?>
+    <?php } ?>
+</div>
     </section>
 
             <div class="container"   style="background-color: gray;">

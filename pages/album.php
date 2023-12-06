@@ -14,6 +14,15 @@
         }
         // print("<pre>".print_r($artistas)."</pre>");
     }
+    $album_id = isset($_GET['IdAlbum']) ? $_GET['IdAlbum'] : null;
+
+    if ($album_id) {
+    // Obtener información del álbum específico si se proporciona un ID
+    $select = "SELECT * FROM musica WHERE IdAlbum = $album_id";
+    $query = mysqli_query($conexion, $select);
+    $album = mysqli_fetch_assoc($query);
+
+} 
 ?>
 <!DOCTYPE html>
 <html>
@@ -81,15 +90,15 @@
             <!-- Ártitsta -->
             <div class="col-md-4 mb-4" >
               <label class="mr-sm-2" for="inlineFormCustomSelect">Artista</label>
-              <select id="form-select" class="custom-select mr-sm-2" name="nom_artista">
+              <select id="nom_artista" class="custom-select mr-sm-2" name="nom_artista">
                 <option value="" selected>Selecciona un artista</option>
                 <?php
-                    $html = '';
-                    foreach($artistas as $artista){
-                        $html.= '<option value="'.$artista["IdArt"].'">'.$artista["apodo_art"].'</option>';  
+                    foreach ($artistas as $artista) {
+                        $apodo_artista = $artista['apodo_art'];
+                        $selected = ($album['IdArt'] == $artista['IdArt']) ? 'selected' : '';
+                        echo "<option value='{$artista['IdArt']}' $selected>$apodo_artista</option>";
                     }
-                    echo $html;  
-                ?>
+                    ?>
               </select>
             </div>
             <!-- Spotify -->

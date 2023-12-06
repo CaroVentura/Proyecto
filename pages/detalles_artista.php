@@ -1,6 +1,33 @@
 <?php
 
 include ('../backend/admin/conexion.php');
+if(isset($_GET["IdArt"])){
+    $artista = array();
+    $id_artista = $_GET["IdArt"];
+    /**
+        SELECT id_alumno, nombre FROM alumnos WHERE id_alumno = 2;
+    */
+    $select = "SELECT * FROM artistas WHERE IdArt = '$id_artista';";
+    // echo $select;
+    //Ejecutamos nuestro query
+    $query = mysqli_query($conexion, $select);//TRUE
+    $artista = mysqli_fetch_array($query, MYSQLI_ASSOC);
+    if (is_null($artista)) {
+        mysqli_close($conexion);
+        echo '  <script> 
+                    alert("Album no encontrado...");
+                    window.location = "../index.php";
+                </script>';
+    }
+    mysqli_close($conexion);
+}//end if isset
+else{
+    mysqli_close($conexion);
+    echo '  <script> 
+                alert("Información no generada de manera correcta...");
+                window.location = "../index.php";
+            </script>';
+}//end else
 ?>
 
 <!DOCTYPE html>
@@ -30,32 +57,38 @@ include ('../backend/admin/conexion.php');
             </nav>
         </div>
     </header>
-    <section><h1 id="titulo">Registrar artista</h1></section>
+    <section><h1 id="titulo">Artista</h1></section>
+    <center>
+        <figure> 
+            <img src="<?php echo ($artista["ImArt"] == '') ? '../img/artistas/' : '../img/artistas/'.$artista["ImArt"];?>" width="200x200">
+        </figure>
+    </center>
     <section class="content" style="background: gray">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
                     <br>
-                    <form id="form-artista" action="../backend/artistas/insert_artista.php" method="post" enctype="multipart/form-data">
+                    <form id="form-artista" action="../backend/artistas/update.php" method="post" enctype="multipart/form-data">
+                    <input type="hidden" value="<?php echo $artista["IdArt"]; ?>" name="IdArt">
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                 <label for="inputAddress">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" name= "nombre" placeholder="Nombre(s)">
+                                <input type="text" class="form-control" id="nombre" name= "nombre" placeholder="Nombre(s)" value="<?php echo $artista["NombreArt"];?>">
                                 </div>
                                 <div class="form-group col-md-4">
                                 <label for="inputPassword4">Apellido paterno</label>
-                                <input type="text" class="form-control" id="apellido_paterno" name="apellido_paterno" placeholder="Apellido paterno">
+                                <input type="text" class="form-control" id="apellido_paterno" name="apellido_paterno" placeholder="Apellido paterno" value="<?php echo $artista["ApArt"];?>">
                                 </div>
                                 <div class="form-group col-md-4">
                                 <label for="inputPassword4">Apellido materno</label>
-                                <input type="text" class="form-control" id="apellido_materno" name="apellido_materno" placeholder="Apellido materno">
+                                <input type="text" class="form-control" id="apellido_materno" name="apellido_materno" placeholder="Apellido materno" value="<?php echo $artista["AmArt"];?>">
                                 </div>
                             </div>
                             <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputPassword4">Apodo</label>
-                                <input type="text" class="form-control" id="apellido_materno" name="apodo_art" placeholder="Apodo del artista">
+                                <input type="text" class="form-control" id="apellido_materno" name="apodo_art" placeholder="Apodo del artista" value="<?php echo $artista["apodo_art"];?>">
                                 </div>
                                 <div class="form-group col-md-6">
                                 <label for="inputZip">Imagen</label>
@@ -64,7 +97,7 @@ include ('../backend/admin/conexion.php');
                             </div>
                             <div class="form-group">
                                 <label for="inputAddress">Bibliografía</label>
-                                <textarea class="form-control" placeholder="Ingresa la bibliografía del artista aquí..." id="descripcion" name="descripcion"></textarea>
+                                <textarea class="form-control" placeholder="Ingresa la bibliografía del artista aquí..." id="descripcion" name="descripcion"><?php echo $artista["DescArt"];?></textarea>
                             </div>
                             <div class="form-row">
                             <div class="form-group col-md-4"></div>

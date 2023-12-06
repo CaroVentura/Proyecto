@@ -3,7 +3,7 @@
 include("../admin/conexion.php");
 
 //Para almacenar la información del form registrar
-$nom_artista = $_POST['apodo_art'];
+$nom_artista = $_POST['nom_artista'];
 $cancion = $_POST['cancion'];
 $album = $_POST['album'];
 $descripcion = $_POST['descripcion'];
